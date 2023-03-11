@@ -30,8 +30,15 @@ class RegisterController extends Controller
  
         $device = substr($request->userAgent() ?? '', 0, 255);
  
-        return response()->json([
+        $response = response()->json([
             'access_token' => $user->createToken($device)->plainTextToken,
         ], Response::HTTP_CREATED);
+    
+        $response->header('Access-Control-Allow-Origin', 'https://e4sy.ammar4web.com');
+        $response->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+        $response->header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+        $response->header('Access-Control-Allow-Credentials', 'true');
+    
+        return $response;
     }
 }
